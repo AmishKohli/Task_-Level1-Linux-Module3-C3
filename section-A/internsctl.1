@@ -1,0 +1,47 @@
+\" Man page for internsctl.
+.\" Copyright (C) YEAR AUTHOR
+.\"
+.TH internsctl 1 "2023-03-27" "1.0" "internsctl manual page"
+.SH NAME
+internsctl \- list information about files
+.SH SYNOPSIS
+.B internsctl
+[\fIOPTIONS\fR] [\fIDIRECTORY\fR]
+.SH DESCRIPTION
+The \fBinternsctl\fR command lists information about the files in the specified directory or the current directory if no directory is specified.
+.SH OPTIONS
+.TP
+.BR \-a
+do not ignore entries starting with .
+.TP
+.BR \-l
+use a long listing format
+.TP
+.BR \-t
+sort by modification time, newest first
+.TP
+.BR \-r
+reverse order while sorting
+.TP
+.BR \-h , \-\-help
+show this help message
+.SH EXAMPLES
+List the files in the current directory in long format with hidden files shown:
+.PP
+.B internsctl \-la
+.PP
+List the files in the /home/user directory sorted by modification time:
+.PP
+.B internsctl \-t /home/user
+.SH AUTHOR
+Written by AUTHOR.
+.SH REPORTING BUGS
+Report bugs to AUTHOR <EMAIL>.
+.SH COPYRIGHT
+Copyright (C) YEAR AUTHOR
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it
+under certain conditions.
+See the GNU General Public License for more details.
+.SH SEE ALSO
+.BR ls (1)
