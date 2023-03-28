@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# Check if command is cpu
+if [[ "$1" == "cpu" ]]; then
+  # Check if sub-command is getinfo
+  if [[ "$2" == "getinfo" ]]; then
+    # Display cpu info
+    lscpu
+  else
+    # Invalid sub-command
+    echo "Invalid sub-command. Usage: internsctl cpu getinfo"
+  fi
+
+# Check if command is memory
+elif [[ "$1" == "memory" ]]; then
+  # Check if sub-command is getinfo
+  if [[ "$2" == "getinfo" ]]; then
+    # Display memory info
+    free -h
+  else
+    # Invalid sub-command
+    echo "Invalid sub-command. Usage: internsctl memory getinfo"
+  fi
+
+# Check if command is user
+elif [[ "$1" == "user" ]]; then
+  # Check if sub-command is create
+  if [[ "$2" == "create" ]]; then
+    # Check if username is provided
+    if [[ -n "$3" ]]; then
+      # Create new user
+      useradd -m "$3"
+    else
+      # Username not provided
+      echo "Please provide a username. Usage: internsctl user create <username>"
+    fi
+  # Check if sub-command is list
+  elif [[ "$2" == "list" ]]; then
+    # Check if sudo-only flag is provided
+    if [[ "$3" == "--sudo-only" ]]; then
+      # List all users with sudo permissions
+      grep -Po '^sudo.+:\K.*$' /etc/group | tr ',' '\n'
+    else
+      # List all regular users
+      cut -d: -f1,3 /etc/passwd | awk -F: '$2 >= 1000 && $2 < 65534 { print $1 }'
+    fi
+  else
+    # Invalid sub-command
+    echo "Invalid sub-command. Usage: internsctl user create <username> OR internsctl user list [--sudo-only]"
+  fi
+
+else
+  # Invalid command
+  echo "Invalid command. Usage: internsctl [cpu|memory|user]"
+fi
+
