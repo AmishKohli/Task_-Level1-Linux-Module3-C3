@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# Define the version of your command
+VERSION="v0.1.0"
+
+# Define the usage information of your command
+function usage() {
+    echo "Usage: $0 [OPTIONS]"
+    echo "Options:"
+    echo "  -h, --help      Print this help message and exit"
+    echo "  -v, --version   Print version information and exit"
+}
+
+# Define the function to handle the --help option
+function handle_help() {
+    usage
+    exit 0
+}
+
+# Define the function to handle the --version option
+function handle_version() {
+    echo "Version: $VERSION"
+    exit 0
+}
+
+# Parse the command line arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -h|--help)
+            handle_help
+            ;;
+        -v|--version)
+            handle_version
+            ;;
+        *)
+            echo "Unknown option: $1"
+            usage
+            exit 1
+            ;;
+    esac
+    shift
+done
+
+# Your command logic goes here
+echo "Hello, World!"
+
