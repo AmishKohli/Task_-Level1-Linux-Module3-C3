@@ -38,8 +38,3 @@ To create man page run :
 [./makeman.sh]
 Run the code using the following command:
 
-## Contributing
-We welcome contributions from the community. If you would like to contribute, please [describe the contribution process].
-
-### Acknowledgments
-[Insert acknowledgments for any external resources used in the project or individuals who contributed to the project.]
