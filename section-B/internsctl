@@ -1,56 +1,68 @@
 #!/bin/bash
 
-
-if [[ "$1" == "cpu" ]]; then
-  
-  if [[ "$2" == "getinfo" ]]; then
-   
-    lscpu
-  else
-    
-    echo "Invalid sub-command. Usage: internsctl cpu getinfo"
-  fi
-
-
-elif [[ "$1" == "memory" ]]; then
-  
-  if [[ "$2" == "getinfo" ]]; then
-    
-    free -h
-  else
-    
-    echo "Invalid sub-command. Usage: internsctl memory getinfo"
-  fi
-
-
-elif [[ "$1" == "user" ]]; then
-  
-  if [[ "$2" == "create" ]]; then
-   
-    if [[ -n "$3" ]]; then
-     
-      useradd -m "$3"
+case "$1" in
+    "cpu")
+        if [[ "$2" == "getinfo" ]]; then
+            lscpu
+        fi
+        ;;
+    "memory")
+        if [[ "$2" == "getinfo" ]]; then
+            free
+        fi
+        ;;
+    "user")
+        if [[ "$2" == "create" ]]; then
+            sudo useradd -m "$3"
+        elif [[ "$2" == "list" ]]; then
+            if [[ "$3" == "--sudo-only" ]]; then
+                awk '/^%sudo/ { for (i=4;i<=NF;i++) { print $i } }' /etc/sudoers
+            else
+                cut -d: -f1 /etc/passwd
+            fi
+        fi
+        ;;
+    "file")
+        if [ "$2" == "getinfo" ]
+    then
+        if [ -f "$3" ] 
+        then
+            echo "File: $3"
+            echo "Access: $(stat -c %A $3)"
+            echo "Size(B): $(stat -c %s $3)"
+            echo "Owner: $(stat -c %U $3)"
+            echo "Modify: $(stat -c %y $3)" 
+        fi 
+        
+        if [ "$3" == "--permission" ]  || [ "$3" == "-p" ]
+        then 
+            FILE_INFO="$(ls -l $4)"
+            FILE_ACCESS=$(echo "$FILE_INFO" | awk '{print $1}')
+            echo "Permission: $FILE_ACCESS"
+        fi
+         if [ "$3" == "--owner" ]  || [ "$3" == "-o" ]
+        then 
+            FILE_INFO="$(ls -l $4)"
+            FILE_OWNER=$(echo "$FILE_INFO" | awk '{print $3}')
+             echo "Owner: $FILE_OWNER"
+        fi  
+         if [ "$3" == "--size" ]  || [ "$3" == "-s" ]
+        then 
+            FILE_INFO="$(ls -l $4)"
+            FILE_SIZE=$(echo "$FILE_INFO" | awk '{print $5}')
+             echo "SIZE: $FILE_SIZE"
+        fi       
+         if [ "$3" == "--last-modified" ]  
+        then
+             FILE_MODIFIED=$(stat -c %y $4)
+             echo "MODIFY: $FILE_MODIFIED"
+        fi                  
     else
-      
-      echo "Please provide a username. Usage: internsctl user create <username>"
+        echo "Usage: internsctl file getinfo <file-name>"
+        echo "Get information about a file"
     fi
-  
-  elif [[ "$2" == "list" ]]; then
-    
-    if [[ "$3" == "--sudo-only" ]]; then
-      
-      grep -Po '^sudo.+:\K.*$' /etc/group | tr ',' '\n'
-    else
-      
-      cut -d: -f1,3 /etc/passwd | awk -F: '$2 >= 1000 && $2 < 65534 { print $1 }'
-    fi
-  else
-    
-    echo "Invalid sub-command. Usage: internsctl user create <username> OR internsctl user list [--sudo-only]"
-  fi
-
-else
-  
-  echo "Invalid command. Usage: internsctl [cpu|memory|user]"
-fi
-
+        ;;
+    *)
+        echo "Invalid command"
+        ;;
+esac
