@@ -1,0 +1,102 @@
+.TH INTERNSCTL 1 "March 2023" "Version 1.0" "Internship @ xenonstack Control Manual"
+
+.SH NAME
+internsctl \- command line interface for managing server resources
+
+.SH SYNOPSIS
+.B internsctl
+[\fIcommand\fR]
+[\fIoptions\fR]
+[\fIarguments\fR]
+
+.SH DESCRIPTION
+\fBinternsctl\fR is a command line tool for managing various resources on a server.
+
+.SH COMMANDS
+The following commands are available:
+
+.TP
+\fBcpu getinfo\fR
+Displays CPU information of the server similar to the \fBlscpu\fR command.
+
+.TP
+\fBmemory getinfo\fR
+Displays memory information of the server similar to the \fBfree\fR command.
+
+.TP
+\fBuser create\fR \fIusername\fR
+Creates a new user with the given \fIusername\fR, who can login to the Linux system and access their home directory.
+
+.TP
+\fBuser list\fR [\fB--sudo-only\fR]
+Lists all regular users present on the server. With the \fB--sudo-only\fR option, it will list only users with sudo permissions.
+
+.TP
+\fBfile getinfo\fR [\fB--size\fR | \fB--permissions\fR | \fB--owner\fR | \fB--last-modified\fR] \fIfilename\fR
+Displays information about the specified \fIfilename\fR, such as size, permissions, owner, and last modified time. With the respective options, it displays only the specific information.
+
+.SH OPTIONS
+The following options are available:
+
+.TP
+\fB--help\fR
+Displays help information for the command.
+
+.SH EXAMPLES
+To get CPU information:
+.nf
+$ internsctl cpu getinfo
+.fi
+
+To get memory information:
+.nf
+$ internsctl memory getinfo
+.fi
+
+To create a new user:
+.nf
+$ sudo internsctl user create john
+.fi
+
+To list all regular users:
+.nf
+$ internsctl user list
+.fi
+
+To list users with sudo permissions:
+.nf
+$ internsctl user list --sudo-only
+.fi
+
+To get file information:
+.nf
+$ internsctl file getinfo filename
+.fi
+
+To get file size:
+OBOB.nf
+OBOBOB$ internsctl file getinfo --size filename
+OBOBOB.fi
+
+To get file permissions:
+OBOBOB.nf
+$ internsctl file getinfo --permissions filename
+.fi
+
+OBOBOBTo get file owner:
+.nf
+$ internsctl file getinfo --owner filename
+.fi
+
+To get file last modified time:
+.nf
+$ internsctl file getinfo --last-modified filename
+.fi
+
+.SH 
+
+.SH AUTHOR
+Written by [Amish kohli] <[amishkoli123@gmail.com]>.
+.SH COPYRIGHT
+Copyright © 2023 [Your Organization Name Here]. This is free software; see the source for copying conditions. There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
