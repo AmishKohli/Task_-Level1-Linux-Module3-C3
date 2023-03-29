@@ -15,7 +15,7 @@ To install this project, follow these steps:
 1) Clone the repository using the following command:
 
 
-git clone https://github.com/[Amishkohli]/[Task_-Level1-Linux-Module3-C3].git
+git clone https://github.com/Amishkohli/Task_-Level1-Linux-Module3-C3.git
 
 2) Install the required dependencies using the following command:
 yum install git 
