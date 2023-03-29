@@ -24,12 +24,18 @@ yum install git
 To make the command for section A, follow these steps:
 [cd Task_-Level1-Linux-Module3-C3]
 [cd section-A]
-[./mycommand.sh]
+[./makecommand.sh]
+
+To create man page run :
+[./makeman.sh]
 
 To run the code for section B, follow these steps:
 [cd Task_-Level1-Linux-Module3-C3]
 [cd section-B]
 [./mycommand.sh]
+
+To create man page run :
+[./makeman.sh]
 Run the code using the following command:
 
 ## Contributing
